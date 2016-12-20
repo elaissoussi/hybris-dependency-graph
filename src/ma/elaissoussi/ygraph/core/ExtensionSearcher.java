@@ -1,9 +1,12 @@
 package ma.elaissoussi.ygraph.core;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import ma.elaissoussi.ygraph.util.Property;
 
 public class ExtensionSearcher {
 
@@ -11,12 +14,14 @@ public class ExtensionSearcher {
 
     private final ExtensionReader extensionReader = new ExtensionReader();
 
-    public Map<String, List<String>> getAllExtensionDependencies(String hybrisPath) {
+    public Map<String, List<String>> getAllExtensionDependencies(String hybrisPath) throws IOException {
         final Map<String, List<String>> extensionDependenies = new HashMap<String, List<String>>();
 
         final List<String> extensionNames = this.extensionReader.getExtensionNames(hybrisPath);
 
-        final String hybrisBinDirPath = hybrisPath + File.separator + BIN;
+        final Property prop = Property.getInstance();
+        final String scanderectory = prop.getPropertyByKey("ygraph.source.hybris.scanderectory");
+        final String hybrisBinDirPath = hybrisPath + File.separator + scanderectory;
 
         final File hybrisBinDirecory = new File(hybrisBinDirPath);
 
